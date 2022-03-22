@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { supabaseClient } from "../lib/client";
 
-const Navbar = () => {
+const Navbar = ({ onOpen }) => {
   const router = useRouter();
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
@@ -29,11 +29,19 @@ const Navbar = () => {
           align="center"
           justify="space-between"
         >
-          <Heading mr="4">TodoApp</Heading>
+          <NavLink href="/">
+            <Heading mr="4" as="button">
+              TodoApp
+            </Heading>
+          </NavLink>
           <Box>
             <NavLink href="/profile">Profile</NavLink>
             <ButtonGroup spacing="4" ml="6">
-              <Button colorScheme="blue">Add Todo</Button>
+              {router.pathname === "/" && (
+                <Button colorScheme="blue" onClick={onOpen}>
+                  Add Todo
+                </Button>
+              )}
               <Button
                 colorScheme="red"
                 onClick={logoutHandler}
